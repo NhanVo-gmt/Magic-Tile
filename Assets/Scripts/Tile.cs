@@ -18,6 +18,15 @@ public class Tile : MonoBehaviour
         transform.Translate(Vector2.down * speed * Time.deltaTime);
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("DeadArea"))
+        {
+            Dispose();
+        }
+    }
+
+
     void Dispose()
     {
         pool.Release(gameObject);
