@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TileDatabase", menuName = "ScriptableObjects/TileDatabase")]
@@ -10,6 +11,11 @@ public class TileDatabase : ScriptableObject
     public List<TileData> GetTileDatas()
     {
         return tileDatas;
+    }
+
+    public TileData GetTileById(string Id)
+    {
+        return tileDatas.FirstOrDefault((a) => a.Id == Id);
     }
 }
 

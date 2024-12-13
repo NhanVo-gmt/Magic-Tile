@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   Id: 0
-  PhaseDatas: []
+  PhaseDatas:
+  - StartTime: 4
+    TileId: Tile
+    NumberOfTiles: 10
+    TimeBetween: 2
+    Speed: 2
