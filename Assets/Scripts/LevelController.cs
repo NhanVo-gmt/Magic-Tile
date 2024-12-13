@@ -4,12 +4,21 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 public class LevelPhase
 {
+    public List<Transform> spawners;
+        
+    // Change per phase
     public PhaseData              phaseData;
     public ObjectPool<GameObject> pool;
     public int                    NumberOfTilesLeft;
+
+    public LevelPhase(List<Transform> spawners)
+    {
+        this.spawners = spawners;
+    }
     
     public void Init(PhaseData phaseData, ObjectPool<GameObject> pool)
     {
@@ -23,9 +32,10 @@ public class LevelPhase
         if (NumberOfTilesLeft <= 0) return;
         
         NumberOfTilesLeft--;
-        
-        GameObject tileGO = pool.Get();
-        tileGO.transform.position = Vector2.zero;
+
+        Transform  spawner = spawners[Random.Range(0, spawners.Count)];
+        GameObject tileGO  = pool.Get();
+        tileGO.transform.position = spawner.transform.position;
         tileGO.transform.rotation = Quaternion.identity;
         
         tileGO.GetComponent<Tile>().Initialize(pool, phaseData.Speed);
@@ -34,15 +44,16 @@ public class LevelPhase
 
 public class LevelController : MonoBehaviour
 {
-    [SerializeField] private TileDatabase tileDatabase;
-    [SerializeField] private LevelData    currentLevelData;
+    [SerializeField] private TileDatabase    tileDatabase;
+    [SerializeField] private LevelData       currentLevelData;
+    [SerializeField] private List<Transform> spawners;
 
     private static LevelController                            Instance;
     private        Dictionary<string, ObjectPool<GameObject>> tilePools = new();
     
     // Single Level
     private bool       isPlaying  = false;
-    private LevelPhase levelPhase = new();
+    private LevelPhase levelPhase;
     private PhaseData  currentPhase;
     private int        nextPhaseIndex;
     private float      timeElapse = 0f;
@@ -79,6 +90,8 @@ public class LevelController : MonoBehaviour
             
             tilePools.Add(tile.Id, _pool);
         }
+
+        levelPhase = new(spawners);
     }
 
     private void Start()

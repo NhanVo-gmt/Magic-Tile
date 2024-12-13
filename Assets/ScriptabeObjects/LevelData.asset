@@ -18,4 +18,4 @@ MonoBehaviour:
     TileId: Tile
     NumberOfTiles: 10
     TimeBetween: 2
-    Speed: 1
+    Speed: 2
