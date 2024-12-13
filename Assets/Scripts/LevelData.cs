@@ -15,5 +15,7 @@ public class PhaseData
 {
     public float  StartTime;
     public string TileId;
+    public int    NumberOfTiles;
     public float  TimeBetween;
+    public float  Speed;
 }
