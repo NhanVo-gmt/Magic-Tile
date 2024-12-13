@@ -1,19 +1,21 @@
-﻿namespace DefaultNamespace
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "TileDatabase", menuName = "ScriptableObjects/TileDatabase")]
+public class TileDatabase : ScriptableObject
 {
-    using System;
-    using System.Collections.Generic;
-    using UnityEngine;
+    [SerializeField] private List<TileData> tileDatas = new();
 
-    [CreateAssetMenu(fileName = "TileDatabase", menuName = "ScriptableObjects/TileDatabase")]
-    public class TileDatabase : ScriptableObject
+    public List<TileData> GetTileDatas()
     {
-        public List<TileData> tileDatas = new();
+        return tileDatas;
     }
+}
 
-    [Serializable]
-    public class TileData
-    {
-        public string     Id;
-        public GameObject Prefab;
-    }
+[Serializable]
+public class TileData
+{
+    public string     Id;
+    public GameObject Prefab;
 }
