@@ -18,6 +18,6 @@ MonoBehaviour:
   PhaseDatas:
   - StartTime: 1
     TileId: Tile
-    NumberOfTiles: 1
-    TimeBetweenTiles: 0
+    NumberOfTiles: 10
+    TimeBetweenTiles: 1
     Speed: 6

@@ -56,7 +56,7 @@ public class ScoreController : MonoBehaviour
                 break;
         }
         
-        uiGame.UpdateScore(currentScore, scoreType.ToString());
+        uiGame.UpdateScore(currentScore, scoreType);
         CheckStarScore(currentScore);
     }
 

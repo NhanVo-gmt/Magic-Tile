@@ -8,6 +8,7 @@ public class UIGame : UIPage
     [Header("Score")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI feedBackText;
+    [SerializeField] private ParticleSystem  scoreParticle;
 
     private Sequence feedBackSeq;
 
@@ -46,15 +47,18 @@ public class UIGame : UIPage
         }
     }
 
-    public void UpdateScore(int currentScore, string feedBack)
+    public void UpdateScore(int currentScore, ScoreType scoreType)
     {
         scoreText.text = currentScore.ToString();
         
-        feedBackText.text = feedBack;
+        feedBackText.text = scoreType.ToString();
         feedBackSeq.Rewind();
         feedBackSeq.Play();
 
         this.progressSlider.DOValue(currentScore, 0.2f);
+        
+        if (scoreType != ScoreType.Missed)
+            scoreParticle.Play();
     }
     
     public void UpdateStar(int index)
