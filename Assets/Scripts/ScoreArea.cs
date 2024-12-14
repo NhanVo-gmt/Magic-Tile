@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using UnityEngine;
 
 public enum ScoreType
@@ -20,8 +21,5 @@ public class ScoreArea : MonoBehaviour, IScoreArea
         set {}
     }
 
-    public void Score()
-    {
-        
-    }
+    public Action OnClicked { get; set; }
 }

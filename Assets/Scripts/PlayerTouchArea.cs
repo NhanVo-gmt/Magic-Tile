@@ -12,20 +12,24 @@ public class PlayerTouchArea : MonoBehaviour
 
     void CheckArea()
     {
-        ScoreType currentScoreType = ScoreType.Missed;
+        ScoreType  currentScoreType = ScoreType.Missed;
+        IScoreArea scoreArea = null;
 
         Collider2D[] boxes = Physics2D.OverlapBoxAll(transform.position, size, 0f);
         foreach (var box in boxes)
         {
-            if (box.TryGetComponent<IScoreArea>(out IScoreArea scoreArea))
+            if (box.TryGetComponent<IScoreArea>(out IScoreArea foundScoreArea))
             {
-                if ((int)scoreArea.ScoreType > (int)currentScoreType)
+                if ((int)foundScoreArea.ScoreType > (int)currentScoreType)
                 {
-                    currentScoreType = scoreArea.ScoreType;
+                    currentScoreType = foundScoreArea.ScoreType;
+                    scoreArea        = foundScoreArea;
                 }
             }
+             
         }
         
+        if (currentScoreType != ScoreType.Missed) scoreArea.OnClicked?.Invoke();
         ScoreController.AddScore(currentScoreType);
     }
 
