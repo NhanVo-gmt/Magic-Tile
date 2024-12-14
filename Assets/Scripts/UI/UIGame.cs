@@ -11,6 +11,7 @@ public class UIGame : UIPage
     [SerializeField] private ParticleSystem  scoreParticle;
 
     private Sequence feedBackSeq;
+    private Sequence feedBackFadeSeq;
 
     [Header("Progress")]
     [SerializeField] private Slider progressSlider;
@@ -21,18 +22,7 @@ public class UIGame : UIPage
     
     public override void Initialise()
     {
-        feedBackSeq = DOTween.Sequence().AppendCallback(() =>
-            {
-                feedBackText.DOFade(1f, 0.1f);
-                feedBackText.rectTransform.DOScale(1.3f, 0.1f);
-            })
-            .Append(feedBackText.rectTransform.DOScale(1f, 1f))
-            .AppendCallback(() =>
-            {
-                feedBackText.rectTransform.DOScale(0f, 0.5f);
-                feedBackText.DOFade(0f, 0.5f);
-            })
-            .SetAutoKill(false).Pause();
+        
     }
 
     public void BindData(LevelData levelData)
@@ -52,8 +42,22 @@ public class UIGame : UIPage
         scoreText.text = currentScore.ToString();
         
         feedBackText.text = scoreType.ToString();
-        feedBackSeq.Rewind();
-        feedBackSeq.Play();
+        
+        if (feedBackSeq != null) feedBackSeq.Kill();
+        
+        feedBackSeq = DOTween.Sequence()
+            .Append(feedBackText.rectTransform.DOScale(1.3f, 0.1f))
+            .Append(feedBackText.rectTransform.DOScale(1f, 1f))
+            .Append(feedBackText.rectTransform.DOScale(0f, 0.5f))
+            .Play();
+
+        if (feedBackFadeSeq != null) feedBackFadeSeq.Kill();
+        
+        feedBackFadeSeq = DOTween.Sequence()
+            .Append(feedBackText.DOFade(1f, 0.1f))
+            .AppendInterval(1f)
+            .Append(feedBackText.DOFade(0f, 0.5f))
+            .Play();
 
         this.progressSlider.DOValue(currentScore, 0.2f);
         

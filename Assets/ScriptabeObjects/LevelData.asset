@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   Id: 0
-  EndTime: 10
+  EndTime: 30
   StarScore: 1e0000004600000064000000
   PhaseDatas:
   - StartTime: 1
@@ -21,3 +21,8 @@ MonoBehaviour:
     NumberOfTiles: 10
     TimeBetweenTiles: 1
     Speed: 6
+  - StartTime: 14
+    TileId: Tile
+    NumberOfTiles: 10
+    TimeBetweenTiles: 0.8
+    Speed: 8
