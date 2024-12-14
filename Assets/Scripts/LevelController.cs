@@ -15,6 +15,8 @@ public class LevelPhase
     public ObjectPool<GameObject> pool;
     public int                    NumberOfTilesLeft;
 
+    private Sequence spawnSeq;
+
     public LevelPhase(List<Transform> spawners)
     {
         this.spawners = spawners;
@@ -25,6 +27,16 @@ public class LevelPhase
         this.phaseData         = phaseData;
         this.pool              = pool;
         this.NumberOfTilesLeft = phaseData.NumberOfTiles;
+        
+        SpawnCurrentPhaseTile();
+    }
+
+    public void SpawnCurrentPhaseTile()
+    {
+        spawnSeq = DOTween.Sequence()
+            .AppendInterval(phaseData.TimeBetweenTiles) // Create a delay in the sequence
+            .AppendCallback(SpawnTile)
+            .SetLoops(-1);
     }
 
     public void SpawnTile()
@@ -39,6 +51,11 @@ public class LevelPhase
         tileGO.transform.rotation = Quaternion.identity;
         
         tileGO.GetComponent<Tile>().Initialize(pool, phaseData.Speed);
+
+        if (NumberOfTilesLeft <= 0)
+        {
+            spawnSeq?.Kill();
+        }
     }
 }
 
@@ -118,16 +135,7 @@ public class LevelController : MonoBehaviour
         timeElapse += Time.deltaTime;
         
         CheckNewPhase();
-    }
-
-    void SpawnCurrentPhaseTile()
-    {
-        if (currentPhase == null) return;
-        
-        spawnSequence = DOTween.Sequence()
-            .AppendInterval(currentPhase.TimeBetween) // Create a delay in the sequence
-            .AppendCallback(levelPhase.SpawnTile)
-            .SetLoops(-1);
+        CheckFinishLevel();
     }
 
 
@@ -143,7 +151,20 @@ public class LevelController : MonoBehaviour
             if (spawnSequence != null) spawnSequence.Kill();
             
             levelPhase.Init(currentPhase, tilePools[currentPhase.TileId]);
-            SpawnCurrentPhaseTile();
         }
+    }
+    
+    void CheckFinishLevel()
+    {
+        if (timeElapse >= currentLevelData.EndTime)
+        {
+            FinishLevel();
+        }
+    }
+    
+    void FinishLevel()
+    {
+        isPlaying = false;
+        Debug.Log("Level finish");
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public int             Id;
+    public int             EndTime;
     public int[]           StarScore = new int[3];
     public List<PhaseData> PhaseDatas;
 }
@@ -17,6 +17,6 @@ public class PhaseData
     public float  StartTime;
     public string TileId;
     public int    NumberOfTiles;
-    public float  TimeBetween;
+    public float  TimeBetweenTiles;
     public float  Speed;
 }
