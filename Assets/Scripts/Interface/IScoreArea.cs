@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IScoreArea
 {
-    public void Score();
+    public ScoreType ScoreType { get; set; }
 }
