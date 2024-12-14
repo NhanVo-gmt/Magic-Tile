@@ -33,6 +33,8 @@ public class UIController : MonoBehaviour
 
                 pages.Add(uiPage);
             }
+            
+            uiPage.Initialise();
         }
     }
     
