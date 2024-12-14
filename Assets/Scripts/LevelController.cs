@@ -52,11 +52,12 @@ public class LevelController : MonoBehaviour
     private        Dictionary<string, ObjectPool<GameObject>> tilePools = new();
     
     // Single Level
-    private bool       isPlaying  = false;
-    private LevelPhase levelPhase;
-    private PhaseData  currentPhase;
-    private int        nextPhaseIndex;
-    private float      timeElapse = 0f;
+    public static LevelData  CurrentLevel { get; set; }
+    private        bool       isPlaying = false;
+    private        LevelPhase levelPhase;
+    private        PhaseData  currentPhase;
+    private        int        nextPhaseIndex;
+    private        float      timeElapse = 0f;
 
     private Sequence spawnSequence;
     
@@ -104,6 +105,10 @@ public class LevelController : MonoBehaviour
         isPlaying    = true;
         timeElapse   = 0f;
         currentPhase = null;
+
+        CurrentLevel = currentLevelData;
+        
+        ScoreController.LoadLevel();
     }
 
     void Update()
