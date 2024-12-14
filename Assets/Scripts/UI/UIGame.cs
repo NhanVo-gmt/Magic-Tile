@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,8 @@ public class UIGame : UIPage
     
     public void UpdateFeedback(string feedBack)
     {
+        feedBackText.rectTransform.DOScale(1.3f, 0f);
+        feedBackText.rectTransform.DOScale(1f, 0.5f);
         feedBackText.text = feedBack;
     }
     
