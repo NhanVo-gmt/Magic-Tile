@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ScoreController : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class ScoreController : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    void Start()
+    private void Start()
     {
         uiGame = UIController.GetPage<UIGame>();
     }
@@ -33,6 +34,7 @@ public class ScoreController : MonoBehaviour
     {
         currentScore = 0;
         
+        uiGame = UIController.GetPage<UIGame>();
         uiGame.BindData(LevelController.CurrentLevel);
     }
 
@@ -54,7 +56,7 @@ public class ScoreController : MonoBehaviour
                 break;
         }
         
-        uiGame.UpdateScore(currentScore, scoreType.ToString());
+        uiGame.UpdateScore(currentScore, scoreType);
         CheckStarScore(currentScore);
     }
 
