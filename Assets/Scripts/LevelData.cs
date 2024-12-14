@@ -7,6 +7,7 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public int             Id;
+    public int[]           StarScore = new int[3];
     public List<PhaseData> PhaseDatas;
 }
 

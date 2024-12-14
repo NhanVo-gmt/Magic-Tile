@@ -26,8 +26,14 @@ public class ScoreController : MonoBehaviour
 
     void Start()
     {
-        uiGame       = UIController.GetPage<UIGame>();
+        uiGame = UIController.GetPage<UIGame>();
+    }
+
+    public static void LoadLevel()
+    {
         currentScore = 0;
+        
+        uiGame.BindData(LevelController.CurrentLevel);
     }
 
     public static void AddScore(ScoreType scoreType)
@@ -48,8 +54,19 @@ public class ScoreController : MonoBehaviour
                 break;
         }
         
-        uiGame.UpdateCurrentScore(currentScore);
-        uiGame.UpdateFeedback(scoreType.ToString());
+        uiGame.UpdateScore(currentScore, scoreType.ToString());
+        CheckStarScore(currentScore);
     }
-    
+
+    public static void CheckStarScore(int currentScore)
+    {
+        for (int i = 0; i < LevelController.CurrentLevel.StarScore.Length; i++)
+        {
+            if (currentScore <= LevelController.CurrentLevel.StarScore[i])
+            {
+                uiGame.UpdateStar(i);
+                return;
+            }
+        }
+    }
 }
