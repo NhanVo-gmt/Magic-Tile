@@ -2,18 +2,24 @@
 
 using UnityEngine;
 
+public enum ScoreType
+{
+    Missed  = 0,
+    Good    = 1,
+    Great   = 2,
+    Perfect = 3,
+}
+
 public class ScoreArea : MonoBehaviour, IScoreArea
 {
-    public enum ScoreType
+    [SerializeField] private ScoreType scoreType;
+
+    public ScoreType ScoreType
     {
-        Missed = 0,
-        Good = 1,
-        Great = 2,
-        Perfect = 3,
+        get { return scoreType; }
+        set {}
     }
 
-    [SerializeField] private ScoreType scoreType;
-    
     public void Score()
     {
         
