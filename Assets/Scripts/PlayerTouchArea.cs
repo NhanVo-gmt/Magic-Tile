@@ -31,6 +31,7 @@ public class PlayerTouchArea : MonoBehaviour
         
         if (currentScoreType != ScoreType.Missed) scoreArea.OnClicked?.Invoke();
         ScoreController.AddScore(currentScoreType);
+        SoundManager.PlayOneShot(SoundClipType.Click);
     }
 
     private void OnDrawGizmosSelected()
